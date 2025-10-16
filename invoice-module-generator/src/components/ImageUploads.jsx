@@ -7,7 +7,10 @@ import axios from "axios";
 const ImageUploads = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [uploadedImages, setUploadedImages] = useState([]);
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL =
+    `https://invoice-generate-fullstack.onrender.com` ||
+    import.meta.env.VITE_API_URL;
+
   // Image upload function
   const handleImageUpload = async (e) => {
     try {
