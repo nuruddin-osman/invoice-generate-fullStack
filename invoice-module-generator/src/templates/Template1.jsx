@@ -1,4 +1,5 @@
 import React from "react";
+import GetImageLogo from "../utils/GetImageLogo";
 
 const Template1 = ({ invoiceData }) => {
   const colors = {
@@ -13,10 +14,13 @@ const Template1 = ({ invoiceData }) => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div
-          className="flex justify-between items-center mb-4 p-4 rounded-lg"
+          className="flex justify-between items-center mb-4 p-4 rounded-lg relative"
           style={{ backgroundColor: colors.secondary }}
         >
           <div>
+            <div className="absolute right-0 top-0">
+              <GetImageLogo />
+            </div>
             <h1
               className="text-lg md:text-3xl font-bold leading-5"
               style={{ color: colors.primary }}

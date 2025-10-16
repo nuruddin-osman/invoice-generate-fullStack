@@ -30,7 +30,7 @@ router.post("/upload", upload.single("image"), async (req, res) => {
       image: [
         {
           url: `/uploads/${req.file.filename}`,
-          alt: req.body.alt || "Product Image",
+          alt: req.file.filename || "Image",
         },
       ],
     });
@@ -58,6 +58,21 @@ router.get("/images", async (req, res) => {
     res.status(200).json({
       success: true,
       images,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching images",
+    });
+  }
+});
+
+router.get("/images/:id", async (req, res) => {
+  try {
+    const image = await Upload.findById(req.params.id);
+    res.status(200).json({
+      success: true,
+      image,
     });
   } catch (error) {
     res.status(500).json({

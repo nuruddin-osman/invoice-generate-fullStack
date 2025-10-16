@@ -6,11 +6,12 @@ import axios from "axios";
 
 const ImageUploads = () => {
   const [imageUrl, setImageUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState({});
   const [uploadedImages, setUploadedImages] = useState([]);
-  const BASE_URL =
-    `https://invoice-generate-fullstack.onrender.com` ||
-    import.meta.env.VITE_API_URL;
 
+  const BASE_URL =
+    import.meta.env.VITE_API_URL ||
+    `https://invoice-generate-fullstack.onrender.com`;
   // Image upload function
   const handleImageUpload = async (e) => {
     try {
@@ -26,16 +27,19 @@ const ImageUploads = () => {
 
       if (response.data) {
         setImageUrl(response.data.imageUrl);
+        localStorage.setItem("logoImageId", response.data.uploadId);
         alert("Image uploaded successfully!");
 
         // Keeping the preview item intact, new item add
         setUploadedImages((prev) => [
           {
             url: response.data.imageUrl,
+            id: response.data.uploadId,
             alt: "Uploaded Image",
           },
           ...prev,
         ]);
+        window.location.reload();
       } else {
         alert("Image upload failed");
       }
@@ -58,6 +62,22 @@ const ImageUploads = () => {
   };
 
   useEffect(() => {
+    const savedId = localStorage.getItem("logoImageId");
+
+    if (savedId) {
+      const fetchImage = async () => {
+        try {
+          const response = await axios.get(`${BASE_URL}/api/images/${savedId}`);
+          if (response.data.success) {
+            setImageUrls(response.data.image?.image[0]);
+          }
+        } catch (error) {
+          console.error("Error fetching saved image:", error);
+        }
+      };
+
+      fetchImage();
+    }
     getImagesDetails();
   }, []);
 
@@ -88,10 +108,10 @@ const ImageUploads = () => {
         </label>
 
         {/* Preview Box */}
-        {imageUrl && (
+        {(imageUrl || imageUrls?.url) && (
           <div className="flex flex-col items-center justify-center w-full sm:w-1/2 bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
             <img
-              src={BASE_URL + imageUrl}
+              src={BASE_URL + (imageUrl || imageUrls?.url)}
               alt="Preview"
               className="w-32 h-24 object-cover rounded-lg border border-gray-300 mb-2"
             />
