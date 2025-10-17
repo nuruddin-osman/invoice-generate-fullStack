@@ -14,15 +14,7 @@ app.use((req, res, next) => {
 });
 
 //Allow CORS from Vercel (frontend)
-app.use(
-  cors({
-    origin: [
-      "https://invoice-generate-full-stack.vercel.app/",
-      "http://localhost:5173",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

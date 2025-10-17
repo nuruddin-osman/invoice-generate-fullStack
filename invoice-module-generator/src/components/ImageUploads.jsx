@@ -9,6 +9,7 @@ const ImageUploads = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageUrls, setImageUrls] = useState({});
   const [uploadedImages, setUploadedImages] = useState([]);
+  console.log(BASE_URL + imageUrl);
 
   // Image upload function
   const handleImageUpload = async (e) => {
@@ -37,7 +38,7 @@ const ImageUploads = () => {
           },
           ...prev,
         ]);
-        window.location.reload();
+        // window.location.reload();
       } else {
         alert("Image upload failed");
       }
@@ -106,10 +107,10 @@ const ImageUploads = () => {
         </label>
 
         {/* Preview Box */}
-        {(imageUrl || imageUrls?.url) && (
+        {((imageUrl && imageUrl) || imageUrls?.url) && (
           <div className="flex flex-col items-center justify-center w-full sm:w-1/2 bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
             <img
-              src={BASE_URL + (imageUrl || imageUrls?.url)}
+              src={BASE_URL + ((imageUrl && imageUrl) || imageUrls?.url)}
               alt="Preview"
               className="w-32 h-24 object-cover rounded-lg border border-gray-300 mb-2"
             />
