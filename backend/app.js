@@ -7,13 +7,6 @@ require("./config/database");
 const uploadRoute = require("./routes/uploads.route");
 
 // Middleware
-// Force HTTP/1.1 connection (Render HTTP/2 bug fix)
-app.use((req, res, next) => {
-  res.setHeader("Connection", "close");
-  next();
-});
-
-//Allow CORS from Vercel (frontend)
 app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "./baseUrl";
 
 const GetImageLogo = () => {
   const [uploadedImages, setUploadedImages] = useState(null);
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const savedId = localStorage.getItem("logoImageId");
