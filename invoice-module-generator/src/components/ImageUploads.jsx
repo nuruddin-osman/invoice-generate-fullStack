@@ -3,15 +3,13 @@ import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { BASE_URL } from "../utils/baseUrl";
 
 const ImageUploads = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [imageUrls, setImageUrls] = useState({});
   const [uploadedImages, setUploadedImages] = useState([]);
 
-  const BASE_URL =
-    import.meta.env.VITE_API_URL ||
-    `https://invoice-generate-fullstack.onrender.com`;
   // Image upload function
   const handleImageUpload = async (e) => {
     try {
